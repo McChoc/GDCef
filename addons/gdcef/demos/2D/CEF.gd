@@ -233,6 +233,15 @@ func _on_mute_pressed():
 	$AudioStreamPlayer2D.stream_paused = $Panel/VBox/HBox2/Mute.button_pressed
 	pass
 
+# ==============================================================================
+# Block/Unblock adds
+# ==============================================================================
+func _on_add_blocker_pressed() -> void:
+	if current_browser == null:
+		return
+	current_browser.enable_ad_block($Panel/VBox/HBox2/AddBlocker.button_pressed)
+	pass
+
 ####
 #### CEF inputs
 ####

@@ -153,6 +153,12 @@ void GDBrowserView::_bind_methods()
                          &GDBrowserView::registerGodotMethod);
     ClassDB::bind_method(D_METHOD("send_to_js", "event_name", "data"),
                          &GDBrowserView::sendToJS);
+    ClassDB::bind_method(D_METHOD("add_ad_block_pattern", "pattern"),
+                         &GDBrowserView::addAdBlockPattern);
+    ClassDB::bind_method(D_METHOD("enable_ad_block", "enable"),
+                         &GDBrowserView::enableAdBlock);
+    ClassDB::bind_method(D_METHOD("is_ad_block_enabled"),
+                         &GDBrowserView::isAdBlockEnabled);
 
     // Signals
     ADD_SIGNAL(MethodInfo("on_download_updated",
@@ -205,6 +211,12 @@ int GDBrowserView::init(godot::String const& url,
                         CefBrowserSettings const& settings,
                         CefWindowInfo const& window_info)
 {
+    if (m_impl == nullptr)
+    {
+        GDCEF_ERROR("GDBrowserView::init: m_impl is nullptr");
+        return -1;
+    }
+
     // Create a new browser using the window parameters specified by
     // |windowInfo|.  If |request_context| is empty the global request context
     // will be used. This method can only be called on the browser process UI
@@ -1019,4 +1031,53 @@ bool GDBrowserView::sendToJS(godot::String eventName,
     BROWSER_DEBUG("Sending message to render process");
     m_browser->GetMainFrame()->SendProcessMessage(PID_RENDERER, message);
     return true;
+}
+
+//------------------------------------------------------------------------------
+bool GDBrowserView::addAdBlockPattern(godot::String pattern)
+{
+    BROWSER_DEBUG("Adding ad block pattern " << pattern.utf8().get_data());
+
+    if ((m_impl == nullptr) || (m_impl->m_ad_blocker == nullptr))
+    {
+        BROWSER_ERROR("Ad blocker not initialized");
+        return false;
+    }
+
+    if (m_impl->m_ad_blocker->addPattern(pattern.utf8().get_data()))
+    {
+        return true;
+    }
+    else
+    {
+        BROWSER_ERROR(
+            "Invalid ad blocking pattern: " << pattern.utf8().get_data());
+        return false;
+    }
+}
+
+//------------------------------------------------------------------------------
+void GDBrowserView::enableAdBlock(bool enable)
+{
+    BROWSER_DEBUG("Enabling ad blocker " << (enable ? "true" : "false"));
+
+    if ((m_impl == nullptr) || (m_impl->m_ad_blocker == nullptr))
+    {
+        BROWSER_ERROR("Ad blocker not initialized");
+        return;
+    }
+
+    m_impl->m_ad_blocker->enable(enable);
+}
+
+//------------------------------------------------------------------------------
+bool GDBrowserView::isAdBlockEnabled() const
+{
+    BROWSER_DEBUG("")
+    if ((m_impl == nullptr) || (m_impl->m_ad_blocker == nullptr))
+    {
+        BROWSER_ERROR("Ad blocker not initialized");
+        return false;
+    }
+    return m_impl->m_ad_blocker->is_enabled();
 }

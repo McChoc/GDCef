@@ -238,9 +238,14 @@ bool GDCef::initialize(godot::Dictionary config)
     // Since we cannot configure CEF from the command line main(argc, argv)
     // because we cannot access to it, we have to configure CEF directly.
     configureCEF(cef_folder_path, m_cef_settings, m_window_info, config);
-    m_enable_media_stream = getConfig(config, "enable_media_stream", false);
-    m_remote_allow_origin =
+    m_browsers_settings.enable_media_stream =
+        getConfig(config, "enable_media_stream", false);
+    m_browsers_settings.remote_allow_origin =
         getConfig(config, "remote_allow_origin", std::string{});
+    m_browsers_settings.enable_ad_block =
+        getConfig(config, "enable_ad_block", true);
+    m_browsers_settings.custom_patterns =
+        getConfig(config, "ad_block_patterns", godot::Array());
 
     // This function should be called on the main application thread to
     // initialize the CEF browser process. A return value of true indicates
@@ -598,6 +603,17 @@ GDBrowserView* GDCef::createBrowser(godot::String const& url,
     browser->setDownloadFolder(
         getConfig(config, "download_folder", godot::String("user://")));
 
+    // Configure ad blocker from browser settings
+    browser->enableAdBlock(m_browsers_settings.enable_ad_block);
+    if (m_browsers_settings.enable_ad_block)
+    {
+        for (int i = 0; i < m_browsers_settings.custom_patterns.size(); i++)
+        {
+            godot::String pattern = m_browsers_settings.custom_patterns[i];
+            browser->addAdBlockPattern(pattern.utf8().get_data());
+        }
+    }
+
     // Update the dimension of the page to the texture size
     browser->resize(texture_rect->get_size());
     texture_rect->set_texture(browser->m_texture);
@@ -707,9 +723,11 @@ void GDCef::Impl::OnBeforeCommandLineProcessing(
     if (command_line == nullptr)
         return;
 
+    auto& settings = m_owner.m_browsers_settings;
+
     // Allow accessing to the camera and microphones.
     // See https://github.com/Lecrapouille/gdcef/issues/49
-    if (m_owner.m_enable_media_stream)
+    if (settings.enable_media_stream)
     {
         GDCEF_DEBUG("Allow enable-media-stream");
         command_line->AppendSwitch("enable-media-stream");
@@ -717,11 +735,11 @@ void GDCef::Impl::OnBeforeCommandLineProcessing(
 
     // To be usable with cef_settings.remote_debugging_port.
     // Set to "*".
-    if (!m_owner.m_remote_allow_origin.empty())
+    if (!settings.remote_allow_origin.empty())
     {
         command_line->AppendSwitch("allow-cef-debugger");
         command_line->AppendSwitchWithValue(
-            "remote-allow-origins", m_owner.m_remote_allow_origin.c_str());
+            "remote-allow-origins", settings.remote_allow_origin.c_str());
     }
 
     // https://magpcss.org/ceforum/viewtopic.php?f=17&t=18970

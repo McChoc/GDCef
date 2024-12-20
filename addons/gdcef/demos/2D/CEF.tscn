@@ -126,6 +126,12 @@ text = " Audio routing"
 layout_mode = 2
 text = "Mute sound"
 
+[node name="AddBlocker" type="CheckBox" parent="Panel/VBox/HBox2"]
+layout_mode = 2
+tooltip_text = "Block or allows adds"
+button_pressed = true
+text = "Adds blocker"
+
 [node name="Info2" type="Label" parent="Panel/VBox/HBox2"]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -157,8 +163,8 @@ presets_visible = false
 [connection signal="pressed" from="Panel/VBox/HBox/Go" to="." method="_on_go_pressed"]
 [connection signal="pressed" from="Panel/VBox/HBox/Refresh" to="." method="_on_refresh_pressed"]
 [connection signal="pressed" from="Panel/VBox/HBox/Prev" to="." method="_on_Prev_pressed"]
-[connection signal="pressed" from="Panel/VBox/HBox/Next" to="." method="_on_Prev_pressed"]
 [connection signal="pressed" from="Panel/VBox/HBox/Next" to="." method="_on_Next_pressed"]
+[connection signal="pressed" from="Panel/VBox/HBox/Next" to="." method="_on_Prev_pressed"]
 [connection signal="item_selected" from="Panel/VBox/HBox/BrowserList" to="." method="_on_BrowserList_item_selected"]
 [connection signal="gui_input" from="Panel/VBox/TextureRect" to="." method="_on_TextureRect_gui_input"]
 [connection signal="resized" from="Panel/VBox/TextureRect" to="." method="_on_texture_rect_resized"]
@@ -166,4 +172,5 @@ presets_visible = false
 [connection signal="pressed" from="Panel/VBox/HBox2/Radio" to="." method="_on_radio_pressed"]
 [connection signal="pressed" from="Panel/VBox/HBox2/RoutingAudio" to="." method="_on_routing_audio_pressed"]
 [connection signal="pressed" from="Panel/VBox/HBox2/Mute" to="." method="_on_mute_pressed"]
+[connection signal="pressed" from="Panel/VBox/HBox2/AddBlocker" to="." method="_on_add_blocker_pressed"]
 [connection signal="color_changed" from="ColorPopup/ColorPicker" to="." method="_on_ColorPicker_color_changed"]

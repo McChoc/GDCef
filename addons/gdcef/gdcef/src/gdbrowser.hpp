@@ -69,6 +69,8 @@
 #include <chrono>
 #include <iostream>
 
+#include "ad_blocker.hpp"
+
 // ****************************************************************************
 //! \brief Class wrapping the CefBrowser class and export methods for Godot
 //! script. This class is instantiate by GDCef.
@@ -118,7 +120,9 @@ private: // CEF interfaces
                 public CefLoadHandler,
                 public CefAudioHandler,
                 public CefLifeSpanHandler,
-                public CefDownloadHandler
+                public CefDownloadHandler,
+                public CefRequestHandler,
+                public CefResourceRequestHandler
     {
     public:
 
@@ -127,7 +131,11 @@ private: // CEF interfaces
         // ---------------------------------------------------------------------
         //! \brief Pass the owner instance.
         // ---------------------------------------------------------------------
-        Impl(GDBrowserView& view) : m_owner(view) {}
+        Impl(GDBrowserView& view) : m_owner(view)
+        {
+            m_ad_blocker = new AdBlocker();
+            assert((m_ad_blocker != nullptr) && "Failed allocating AdBlocker");
+        }
 
         // ---------------------------------------------------------------------
         //! \brief Destructor
@@ -185,6 +193,14 @@ private: // CEF interfaces
         //! \brief Return the handler for download events.
         // ---------------------------------------------------------------------
         virtual CefRefPtr<CefDownloadHandler> GetDownloadHandler() override
+        {
+            return this;
+        }
+
+        // ---------------------------------------------------------------------
+        //! \brief Return the handler for request filtering.
+        // ---------------------------------------------------------------------
+        virtual CefRefPtr<CefRequestHandler> GetRequestHandler() override
         {
             return this;
         }
@@ -300,19 +316,20 @@ private: // CEF interfaces
 
     private: // CefLifeSpanHandler interfaces
 
-        virtual bool OnBeforePopup(CefRefPtr<CefBrowser> browser,
-                                   CefRefPtr<CefFrame> frame,
-                                   int popup_id,
-                                   const CefString& target_url,
-                                   const CefString& target_frame_name,
-                                   WindowOpenDisposition target_disposition,
-                                   bool user_gesture,
-                                   const CefPopupFeatures& popupFeatures,
-                                   CefWindowInfo& windowInfo,
-                                   CefRefPtr<CefClient>& client,
-                                   CefBrowserSettings& settings,
-                                   CefRefPtr<CefDictionaryValue>& extra_info,
-                                   bool* no_javascript_access) override
+        virtual bool OnBeforePopup(
+            CefRefPtr<CefBrowser> browser,
+            CefRefPtr<CefFrame> frame,
+            int popup_id,
+            const CefString& target_url,
+            const CefString& target_frame_name,
+            CefLifeSpanHandler::WindowOpenDisposition target_disposition,
+            bool user_gesture,
+            const CefPopupFeatures& popupFeatures,
+            CefWindowInfo& windowInfo,
+            CefRefPtr<CefClient>& client,
+            CefBrowserSettings& settings,
+            CefRefPtr<CefDictionaryValue>& extra_info,
+            bool* no_javascript_access) override
         {
             return m_owner.onBeforePopup(browser, target_url);
         }
@@ -344,9 +361,34 @@ private: // CEF interfaces
             m_owner.onDownloadUpdated(browser, download_item, callback);
         }
 
+    private: // CefRequestContextHandler interfaces
+
+        virtual CefResourceRequestHandler::ReturnValue
+        OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser,
+                             CefRefPtr<CefFrame> frame,
+                             CefRefPtr<CefRequest> request,
+                             CefRefPtr<CefCallback> callback) override
+        {
+            return m_ad_blocker->OnBeforeResourceLoad(
+                browser, frame, request, callback);
+        }
+
+        virtual CefRefPtr<CefResourceRequestHandler>
+        GetResourceRequestHandler(CefRefPtr<CefBrowser> browser,
+                                  CefRefPtr<CefFrame> frame,
+                                  CefRefPtr<CefRequest> request,
+                                  bool is_navigation,
+                                  bool is_download,
+                                  const CefString& request_initiator,
+                                  bool& disable_default_handling) override
+        {
+            return m_ad_blocker;
+        }
+
     private:
 
         GDBrowserView& m_owner;
+        CefRefPtr<AdBlocker> m_ad_blocker;
         RoutingAudio m_audio;
     };
 
@@ -727,6 +769,25 @@ public:
     // -------------------------------------------------------------------------
     bool sendToJS(godot::String eventName, const godot::Variant& data);
 
+    // -------------------------------------------------------------------------
+    //! \brief Add a custom pattern to the ad blocker
+    //! \param[in] pattern Regex pattern to match URLs to block
+    //! \return true if pattern was successfully added
+    // -------------------------------------------------------------------------
+    bool addAdBlockPattern(godot::String pattern);
+
+    // -------------------------------------------------------------------------
+    //! \brief Enable or disable ad blocking
+    //! \param[in] enable True to enable ad blocking, false to disable
+    // -------------------------------------------------------------------------
+    void enableAdBlock(bool enable);
+
+    // -------------------------------------------------------------------------
+    //! \brief Check if ad blocking is enabled
+    //! \return True if ad blocking is enabled
+    // -------------------------------------------------------------------------
+    bool isAdBlockEnabled() const;
+
 private:
 
     void resize_(int width, int height);
@@ -886,7 +947,7 @@ private:
     //! \brief Download folder (configured from Browser config)
     fs::path m_download_folder;
 
-    //! \brief
+    //! \brief JS bindings
     std::unordered_map<std::string, godot::Callable> m_js_bindings;
 };
 

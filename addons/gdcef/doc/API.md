@@ -23,6 +23,9 @@ Two main classes:
 | `initialize` | `config`: Dictionary | bool | Replaces Godot _init() and passes optional [CEF configuration](#cef-configuration-initialize). Returns false in case of failure or double initialization, in this case you should halt the execution of your application. |
 | `is_alive` | | bool | Returns if the `GDCef` is alive. |
 | `shutdown` | | | Releases CEF memory and notifies sub CEF processes that the application is exiting. All browsers are destroyed. `GDCef` becomes inactive |
+| `add_ad_block_pattern` | `pattern`: String | bool | Add a custom regex pattern to block ads matching this pattern. Returns true if pattern was successfully added. |
+| `enable_ad_block` | `enable`: bool | bool | Enable or disable the ad blocker. When enabled, common ad patterns are blocked by default. Returns true if operation was successful. |
+| `is_ad_block_enabled` | | bool | Check if the ad blocker is currently enabled. |
 
 ### GDCef signals
 
@@ -141,8 +144,34 @@ Browser settings are passed as a GDScript Dictionary to `create_browser`. Here a
 | image_loading | bool | true | Enable or disable image loading |
 | databases | bool | true | Enable or disable web database support |
 | webgl | bool | true | Enable or disable WebGL support |
+| enable_ad_block | bool | true | Enable or disable the ad blocker |
+| ad_block_patterns | Array[String] | [] | Additional regex patterns for blocking ads. Invalid patterns will be ignored. |
 
-For more information about available settings, see [cef_types.h](../thirdparty/cef_binary/include/internal/cef_types.h).
+Example usage:
+```gdscript
+var config = {
+    "enable_ad_block": true,
+    "ad_block_patterns": [
+        ".*example-ad-server\.com.*",
+        ".*/custom-ads/.*"
+    ]
+}
+var browser = $GDCEF.create_browser("https://example.com", $TextureRect, config)
+
+# Add additional patterns later
+if browser.add_ad_block_pattern(".*another-ad-server\.com.*"):
+    print("Pattern added successfully")
+else:
+    print("Failed to add pattern")
+
+# Check if ad blocking is enabled
+if browser.is_ad_block_enabled():
+    print("Ad blocking is active")
+
+# Disable ad blocking
+if browser.enable_ad_block(false):
+    print("Ad blocking disabled successfully")
+```
 
 ### CEF version
 
