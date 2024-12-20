@@ -31,18 +31,94 @@ AdBlocker::AdBlocker()
 {
     GDCEF_DEBUG("");
 
-    // Add common ad patterns
     const std::vector<std::string> default_patterns = {
+        // Réseaux publicitaires classiques
         R"(.*doubleclick\.net.*)",
         R"(.*googlesyndication\.com.*)",
         R"(.*google-analytics\.com.*)",
         R"(.*adnxs\.com.*)",
         R"(.*advertising\.com.*)",
+        R"(.*quantserve\.com.*)",
+        R"(.*scorecardresearch\.com.*)",
+        R"(.*zedo\.com.*)",
+        R"(.*adbrite\.com.*)",
+        R"(.*adocean\.pl.*)",
+        R"(.*adsonar\.com.*)",
+        R"(.*adtech\..*)",
+        R"(.*adtechus\.com.*)",
+        R"(.*atwola\.com.*)",
+        R"(.*bidvertiser\.com.*)",
+        R"(.*casalemedia\.com.*)",
+        R"(.*chitika\.net.*)",
+        R"(.*clicksor\.com.*)",
+        R"(.*eclick\.vn.*)",
+        R"(.*fmpub\.net.*)",
+        R"(.*openx\..*)",
+        R"(.*rubiconproject\.com.*)",
+        R"(.*taboola\.com.*)",
+        R"(.*outbrain\.com.*)",
+        R"(.*criteo\..*)",
+        R"(.*amazon-adsystem\.com.*)",
+        R"(.*adform\..*)",
+        R"(.*admob\..*)",
+        R"(.*moatads\.com.*)",
+
+        // Trackers et analytics
+        R"(.*analytics\..*)",
+        R"(.*tracking\..*)",
+        R"(.*track\..*)",
+        R"(.*stats\..*)",
+        R"(.*pixel\..*)",
+        R"(.*log\..*)",
+        R"(.*beacon\..*)",
+        R"(.*telemetry\..*)",
+        R"(.*metrics\..*)",
+        R"(.*matomo\..*)",
+        R"(.*piwik\..*)",
+
+        // Patterns génériques
         R"(.*/ads/.*)",
         R"(.*/adserv.*)",
         R"(.*/banner.*)",
+        R"(.*/pop.*)",
+        R"(.*/sponsor.*)",
+        R"(.*/advertising.*)",
+        R"(.*/advert.*)",
+        R"(.*/clicktrack.*)",
+        R"(.*/affiliate.*)",
+        R"(.*/promo.*)",
+        R"(.*/commercials.*)",
+        R"(.*/banners.*)",
         R"(.*/analytics.*)",
-        R"(.*/tracker.*)"};
+        R"(.*/tracker.*)",
+        R"(.*/pixels.*)",
+        R"(.*/count.*)",
+        R"(.*/stat.*)",
+        R"(.*/targeting.*)",
+        R"(.*/adview.*)",
+        R"(.*/adclick.*)",
+
+        // Réseaux sociaux tracking
+        R"(.*facebook\.com/tr.*)",
+        R"(.*facebook\.com/plugins.*)",
+        R"(.*linkedin\.com/pixel.*)",
+        R"(.*twitter\.com/i/jot.*)",
+        R"(.*pinterest\.com/ping.*)",
+
+        // Other specific trackers
+        R"(.*hotjar\.com.*)",
+        R"(.*mouseflow\.com.*)",
+        R"(.*crazyegg\.com.*)",
+        R"(.*clicktale\.net.*)",
+        R"(.*optimizely\.com.*)",
+        R"(.*mixpanel\.com.*)",
+        R"(.*kissmetrics\.com.*)",
+        R"(.*segment\.io.*)",
+        R"(.*segment\.com.*)",
+        R"(.*amplitude\.com.*)",
+        R"(.*bugsnag\.com.*)",
+        R"(.*sentry\.io.*)",
+        R"(.*newrelic\.com.*)"};
 
     for (const auto& pattern : default_patterns)
     {
@@ -92,6 +168,6 @@ AdBlocker::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser,
         }
     }
 
-    GDCEF_DEBUG("Allowed ad URL: " << url);
+    // GDCEF_DEBUG("Allowed ad URL: " << url);
     return RV_CONTINUE; // Allow the request
 }
