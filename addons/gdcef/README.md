@@ -86,6 +86,14 @@ Try switching Godot's graphics mode to 'Compatibility' instead of 'Forward+'. Se
 - CEF is currently not supported on iOS or Android devices. For Android, you can see this [project](https://github.com/Sam2much96/GodotChrome).
 - Chrome extensions are limited to version 2, although most users now rely on version 3.
 
+### I have conflicts with my Keyboard bindings
+
+Yes, Godot has default keyboard bindings which can interfere with CEF. For example, if you have a Godot button and if you press the `KEY_SPACE` the button callback is called. If you want to use the CEF clipboard (copy, paste, cut), you have to disable the default Godot keyboard bindings, else an infinite loop occurs.
+
+See your Godot project settings to disable the default keyboard bindings.
+
+![keyboard bindings](doc/pics/ui_map.png)
+
 ### I have limitations!
 
 Yes, we know:

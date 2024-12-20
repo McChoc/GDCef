@@ -34,11 +34,15 @@ layout_mode = 2
 [node name="New" type="Button" parent="Panel/VBox/HBox"]
 layout_mode = 2
 tooltip_text = "New empty document"
+shortcut_feedback = false
+shortcut_in_tooltip = false
 text = "New"
 
 [node name="Home" type="Button" parent="Panel/VBox/HBox"]
 layout_mode = 2
 tooltip_text = "Go to home page"
+shortcut_feedback = false
+shortcut_in_tooltip = false
 text = "Home"
 
 [node name="URL" type="Label" parent="Panel/VBox/HBox"]
@@ -54,21 +58,29 @@ tooltip_text = "Type your desired URl and then click on the go button"
 [node name="Go" type="Button" parent="Panel/VBox/HBox"]
 layout_mode = 2
 tooltip_text = "Load a page given its URL"
+shortcut_feedback = false
+shortcut_in_tooltip = false
 text = "Go"
 
 [node name="Refresh" type="Button" parent="Panel/VBox/HBox"]
 layout_mode = 2
 tooltip_text = "Reload the page"
+shortcut_feedback = false
+shortcut_in_tooltip = false
 text = "Refresh"
 
 [node name="Prev" type="Button" parent="Panel/VBox/HBox"]
 layout_mode = 2
 tooltip_text = "Go to previous page"
+shortcut_feedback = false
+shortcut_in_tooltip = false
 text = "<"
 
 [node name="Next" type="Button" parent="Panel/VBox/HBox"]
 layout_mode = 2
 tooltip_text = "Go to next page"
+shortcut_feedback = false
+shortcut_in_tooltip = false
 text = ">"
 
 [node name="TabBar" type="Label" parent="Panel/VBox/HBox"]
@@ -94,11 +106,15 @@ layout_mode = 2
 [node name="BGColor" type="Button" parent="Panel/VBox/HBox2"]
 layout_mode = 2
 tooltip_text = "Inject java script changing the body color of the html page"
+shortcut_feedback = false
+shortcut_in_tooltip = false
 text = "Body color"
 
 [node name="Radio" type="Button" parent="Panel/VBox/HBox2"]
 layout_mode = 2
 tooltip_text = "Load a page with sound"
+shortcut_feedback = false
+shortcut_in_tooltip = false
 text = "Radio"
 
 [node name="RoutingAudio" type="CheckBox" parent="Panel/VBox/HBox2"]
