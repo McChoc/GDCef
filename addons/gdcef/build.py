@@ -91,7 +91,7 @@ MODULE_TARGET = COMPILATION_MODE                          # "release" or "debug"
 
 # Use OpenMP for using CPU parallelism (i.e. for copying CEF textures to Godot)
 # FIXME no openmp installed by default on MacOS :(
-CEF_USE_CPU_PARALLELISM = "yes"                           # or "no"
+CEF_USE_CPU_PARALLELISM = "no"                           # or "yes"
 
 # Minimun CMake version needed for compiling CEF
 CMAKE_MIN_VERSION = "3.19"
