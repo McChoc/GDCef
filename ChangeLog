@@ -1,3 +1,6 @@
+Version 0.16.1:
+	* Disable openmp by default (less CPU consumption).
+
 Version 0.16.0:
 	* Add initial naive add blocker.
     * Remove Godot keyboard bindings interfering in demo 2D.
