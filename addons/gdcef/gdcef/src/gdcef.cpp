@@ -26,7 +26,6 @@
 //------------------------------------------------------------------------------
 #include "gdcef.hpp"
 #include "gdbrowser.hpp"
-#include "godot_js_binder.hpp"
 #include "helper_config.hpp"
 #include "helper_files.hpp"
 
@@ -177,7 +176,7 @@ bool GDCef::initialize(godot::Dictionary config)
         GDCEF_DEBUG("OpenMP number of threads = " << omp_get_num_threads());
     }
 #else
-    GDCEF_ERROR("OpenMP is not enabled");
+    GDCEF_DEBUG("OpenMP is not enabled");
 #endif
 
     if (m_impl != nullptr)

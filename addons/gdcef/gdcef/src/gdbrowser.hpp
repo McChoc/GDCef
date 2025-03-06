@@ -726,10 +726,10 @@ public:
     // -------------------------------------------------------------------------
     //! \brief Register a GDScript method in the JavaScript context.
     //! The registered GDScript method can be called from JavaScript using:
-    //!     window.godot.methodName(args)
+    //!     window.godotMethods.methodName(args)
     //!
-    //! \param[in] callable the GDScript method to register. The callable must
-    //! be  a valid GDScript method that can receive string parameters.
+    //! \param[in] object The object to register the method from.
+    //! \param[in] method_name The name of the method to register.
     //!
     //! \return true if the method has been successfully registered, false
     //! otherwise.
@@ -742,32 +742,32 @@ public:
     //!     func my_method(data: String) -> void:
     //!         print("Received from JS: ", data)
     //!
-    //!     browser.register_method(Callable(self, "my_method"))
+    //!     browser.register_method(self, "my_method")
     //!
     //! Example in JavaScript:
-    //!     window.godot.my_method("Hello from JS!");
+    //!     window.godotMethods.my_method("Hello from JS!");
     //!
     // -------------------------------------------------------------------------
-    bool registerGodotMethod(const godot::Callable& callable);
+    bool registerGodotMethod(godot::Object* object, godot::String method_name);
 
     // -------------------------------------------------------------------------
     //! \brief Send a message to the JavaScript side.
     //! The message will be received in JavaScript as a JSON object.
     //!
-    //! \param[in] eventName Name of the event to trigger in JavaScript.
+    //! \param[in] event_name Name of the event to trigger in JavaScript.
     //! \param[in] data Godot::Variant to send.
     //! \return true if the message has been sent, false otherwise.
     //!
     //! Example in GDScript:
-    //!     browser.sendToJS("myEvent", {"key": "value"})
+    //!     browser.js_emit("myEvent", {"key": "value"})
     //!
     //! Example in JavaScript:
-    //!     window.addEventListener("myEvent", function(event) {
+    //!     window.godotEvents.on("myEvent", function(event) {
     //!         const data = JSON.parse(event.data);
     //!         console.log(data.key); // outputs: "value"
     //!     });
     // -------------------------------------------------------------------------
-    bool sendToJS(godot::String eventName, const godot::Variant& data);
+    bool jsEmit(godot::String event_name, const godot::Variant& data);
 
     // -------------------------------------------------------------------------
     //! \brief Add a custom pattern to the ad blocker
@@ -890,12 +890,34 @@ private:
                            CefRefPtr<CefDownloadItemCallback> callback);
 
     // -------------------------------------------------------------------------
-    //! \brief Called when a message is received from a different process.
+    //! \brief Called when an IPC message is received from the render process.
+    //! Execute the requested Godot method.
     // -------------------------------------------------------------------------
     bool onProcessMessageReceived(CefRefPtr<CefBrowser> browser,
                                   CefRefPtr<CefFrame> frame,
                                   CefProcessId source_process,
                                   CefRefPtr<CefProcessMessage> message);
+
+    // -------------------------------------------------------------------------
+    //! \brief Recursively convert JSON data to Godot Variant types
+    //! \param[in] json JSON value to convert
+    //! \return Converted Godot Variant
+    // -------------------------------------------------------------------------
+    godot::Variant JsonToGodot(const godot::Dictionary& json);
+
+    // -------------------------------------------------------------------------
+    //! \brief Recursively convert JSON array to Godot Variant types
+    //! \param[in] json_array JSON array to convert
+    //! \return Converted Godot Array
+    // -------------------------------------------------------------------------
+    godot::Variant JsonToGodot(const godot::Array& json_array);
+
+    // -------------------------------------------------------------------------
+    //! \brief Generic converter for any JSON value to Godot Variant types
+    //! \param[in] json_value JSON value to convert
+    //! \return Converted Godot Variant
+    // -------------------------------------------------------------------------
+    godot::Variant JsonToGodot(const godot::Variant& json_value);
 
 private:
 

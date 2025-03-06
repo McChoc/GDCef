@@ -73,10 +73,10 @@ func _on_page_loaded(browser):
 # ==============================================================================
 func _on_page_failed_loading(err_code, err_msg, browser):
 	var html = "<html><body bgcolor=\"white\">" \
-		+ "<h2>Failed to load URL " + browser.get_url() + "!</h2>" \
-		+ "<p>Error code: " + str(err_code) + "</p>" \
-		+ "<p>Error message: " + err_msg + "!</p>" \
-		+ "</body></html>"
+		+"<h2>Failed to load URL " + browser.get_url() + "!</h2>" \
+		+"<p>Error code: " + str(err_code) + "</p>" \
+		+"<p>Error message: " + err_msg + "!</p>" \
+		+"</body></html>"
 	browser.load_data_uri(html, "text/html")
 	pass
 
