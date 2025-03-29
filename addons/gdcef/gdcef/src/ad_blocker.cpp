@@ -32,7 +32,7 @@ AdBlocker::AdBlocker()
     GDCEF_DEBUG("");
 
     const std::vector<std::string> default_patterns = {
-        // Réseaux publicitaires classiques
+        // Classic advertising networks
         R"(.*doubleclick\.net.*)",
         R"(.*googlesyndication\.com.*)",
         R"(.*google-analytics\.com.*)",
@@ -76,11 +76,11 @@ AdBlocker::AdBlocker()
         R"(.*matomo\..*)",
         R"(.*piwik\..*)",
 
-        // Patterns génériques
+        // Generic patterns
         R"(.*/ads/.*)",
         R"(.*/adserv.*)",
         R"(.*/banner.*)",
-        R"(.*/pop.*)",
+        // R"(.*/pop.*)", // See https://github.com/Lecrapouille/gdcef/issues/80
         R"(.*/sponsor.*)",
         R"(.*/advertising.*)",
         R"(.*/advert.*)",
@@ -93,12 +93,13 @@ AdBlocker::AdBlocker()
         R"(.*/tracker.*)",
         R"(.*/pixels.*)",
         R"(.*/count.*)",
-        R"(.*/stat.*)",
+        // R"(.*/stat.*)", // See
+        // https://github.com/Lecrapouille/gdcef/issues/80
         R"(.*/targeting.*)",
         R"(.*/adview.*)",
         R"(.*/adclick.*)",
 
-        // Réseaux sociaux tracking
+        // Social networks tracking
         R"(.*facebook\.com/tr.*)",
         R"(.*facebook\.com/plugins.*)",
         R"(.*linkedin\.com/pixel.*)",
