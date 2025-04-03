@@ -1,6 +1,6 @@
 # Chromium Embedded Framework as Godot 4.3 Native Module
 
-This repository provides C++ classes that wrap part of the [Chromium Embedded Framework](https://bitbucket.org/chromiumembedded/cef/wiki/Home) (CEF) API into a Godot 4.2+ native module (GDExtension). This enables web browser integration into your Godot 2D and 3D games for Linux, Windows and macOS. The name of this module is `gdcef`.
+This repository provides C++ classes that wrap part of the [Chromium Embedded Framework](https://bitbucket.org/chromiumembedded/cef/wiki/Home) (CEF) API into a Godot 4.2+ native module (GDExtension). This enables web browser integration into your Godot 2D and 3D games for Linux, Windows and macOS. The name of this module is `gdCEF`.
 
 ## TLDR: Compilation Steps
 
@@ -33,7 +33,7 @@ This repository contains the following important elements:
 
 We've included documentation to help you understand the core aspects of this project:
 - The Godot GDScript API is documented [here](doc/API.md). This document describes all the functions that can be called from your GDScripts.
-- The design details are explained in this [document](doc/detailsdesign.md). It explains the repository organization, how gdcef is compiled, why a secondary process is needed, and more.
+- The design details are explained in this [document](doc/detailsdesign.md). It explains the repository organization, how gdCEF is compiled, why a secondary process is needed, and more.
 - The software architecture is detailed in this [document](doc/architecture.md). This document explains how CEF works internally. **Note: this document is a draft**.
 
 ## FAQ
@@ -49,13 +49,13 @@ Because we need to link against `libcef_dll_wrapper` that is only obtained by co
 - If you want to use a different name for the CEF artifacts folder, you can change it in the [build.py](../build.py) script. Find the line `CEF_ARTIFACTS_FOLDER_NAME = "cef_artifacts"`, modify it and rerun `build.py`. This will update the path in Godot.
   Alternatively, you can specify it explicitly when calling `initialize({"artifacts": "res://cef_artifacts/", ... })`.
 - CEF can run directly from the Godot editor, and you can export your project for Linux and Windows as usual.
-- The gdcef module verifies the presence of both CEF artifacts and the secondary CEF process. If either is missing, your application will close.
+- The gdCEF module verifies the presence of both CEF artifacts and the secondary CEF process. If either is missing, your application will close.
 - From the node selector, add a Godot `TextureRect` to your scene graph to hold your browser's texture. Name it `TextureRect`.
 - From the node selector, look for the `GDCEF` node and name it `CEF`. If not found, this means the GDExtension file hasn't been loaded.
 - Create a GDScript. Use `initialize` to start CEF, instead of the usual Godot `_init` method. Refer to this [document](doc/API.md) for details on the available functions. For example, inside `func _ready():` of the `$CEF` node, create a new browser with the `create_browser` function, passing the desired URL, the `TextureRect` and optional settings (default: `{}` - see the API for possible options). The browser you create will be a child node in Godot, with a default name of `browser_<id>` (where `<id>` starts at 0). You can rename it using the `set_name()` function. Like any Godot node, the browser can be found with a function such as `$CEF.get_node("browser_0")`.
 
 ```
-var browser = $CEF.create_browser("https://github.com/Lecrapouille/gdcef", $TextureRect, {})
+var browser = $CEF.create_browser("https://github.com/Lecrapouille/gdCEF", $TextureRect, {})
 browser.set_name("hello")
 ```
 
@@ -97,9 +97,9 @@ See your Godot project settings to disable the default keyboard bindings.
 ### I have limitations!
 
 Yes, we know:
-- Keyboard limitation: https://github.com/Lecrapouille/gdcef/issues/55.
-- Slow and with limitations: https://github.com/Lecrapouille/gdcef/issues/50.
-- Restrcited for some access: https://github.com/Lecrapouille/gdcef/issues/75.
+- Keyboard limitation: https://github.com/Lecrapouille/gdCEF/issues/55.
+- Slow and with limitations: https://github.com/Lecrapouille/gdCEF/issues/50.
+- Restrcited for some access: https://github.com/Lecrapouille/gdCEF/issues/75.
 
 ### I cannot watch videos!
 

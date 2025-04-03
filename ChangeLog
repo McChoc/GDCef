@@ -24,7 +24,7 @@ Version 0.14.0:
 	* Use Godot warnings/errors instead of std::cout/cerr.
 	* Use more explicit include path to Godot header files.
 	* build system: Remove possibility of calling python scons (just missing path).
-	* build system: git clone projects using gdcef as demos.
+	* build system: git clone projects using gdCEF as demos.
 	* Update demos to Godot 4.3.
 	* Rename subprocess to render_process.
 	* Simplify the code of the render process: remove browser class.
