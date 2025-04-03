@@ -306,6 +306,8 @@ private:
         bool enable_ad_block = true;
         //! \brief Custom patterns for ad blocker
         godot::Array custom_patterns;
+        //! \brief User gesture required
+        bool user_gesture_required = true;
     };
 
     //! \brief CEF interface implementation

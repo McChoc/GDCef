@@ -154,6 +154,7 @@ Browser settings are passed as a GDScript Dictionary to `create_browser`. Here a
 | ad_block_patterns | Array[String] | [] | Additional regex patterns for blocking ads. Invalid patterns will be ignored. |
 | allow_downloads | bool | true | Allow the browser for downloading data. |
 | download_folder | string | "user://" | Desired location holding downloaded files. |
+| user_gesture_required | bool | true | false: Autoplay policy that does not require any user gesture. |
 
 Example usage:
 

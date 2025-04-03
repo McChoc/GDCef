@@ -245,6 +245,8 @@ bool GDCef::initialize(godot::Dictionary config)
         getConfig(config, "enable_ad_block", true);
     m_browsers_settings.custom_patterns =
         getConfig(config, "ad_block_patterns", godot::Array());
+    m_browsers_settings.user_gesture_required =
+        getConfig(config, "user_gesture_required", true);
 
     // This function should be called on the main application thread to
     // initialize the CEF browser process. A return value of true indicates
@@ -744,6 +746,18 @@ void GDCef::Impl::OnBeforeCommandLineProcessing(
     // https://magpcss.org/ceforum/viewtopic.php?f=17&t=18970
     command_line->AppendSwitchWithValue("use-angle", "swiftshader");
     command_line->AppendSwitchWithValue("use-gl", "angle");
+
+    // https://github.com/Lecrapouille/gdcef/issues/79
+    if (settings.user_gesture_required)
+    {
+        command_line->AppendSwitchWithValue("autoplay-policy",
+                                            "user-gesture-required");
+    }
+    else
+    {
+        command_line->AppendSwitchWithValue("autoplay-policy",
+                                            "no-user-gesture-required");
+    }
 
     // TBD: Do we have to allow gdscript to give command line ?
     // https://peter.sh/experiments/chromium-command-line-switches/
