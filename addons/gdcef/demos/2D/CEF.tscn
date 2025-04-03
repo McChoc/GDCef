@@ -23,9 +23,12 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBox" type="VBoxContainer" parent="Panel"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 3
 
 [node name="HBox" type="HBoxContainer" parent="Panel/VBox"]
@@ -97,7 +100,7 @@ tooltip_text = "Select opened pages"
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 0
-expand_mode = 1
+expand_mode = 3
 stretch_mode = 3
 
 [node name="HBox2" type="HBoxContainer" parent="Panel/VBox"]
@@ -163,8 +166,8 @@ presets_visible = false
 [connection signal="pressed" from="Panel/VBox/HBox/Go" to="." method="_on_go_pressed"]
 [connection signal="pressed" from="Panel/VBox/HBox/Refresh" to="." method="_on_refresh_pressed"]
 [connection signal="pressed" from="Panel/VBox/HBox/Prev" to="." method="_on_Prev_pressed"]
-[connection signal="pressed" from="Panel/VBox/HBox/Next" to="." method="_on_Next_pressed"]
 [connection signal="pressed" from="Panel/VBox/HBox/Next" to="." method="_on_Prev_pressed"]
+[connection signal="pressed" from="Panel/VBox/HBox/Next" to="." method="_on_Next_pressed"]
 [connection signal="item_selected" from="Panel/VBox/HBox/BrowserList" to="." method="_on_BrowserList_item_selected"]
 [connection signal="gui_input" from="Panel/VBox/TextureRect" to="." method="_on_TextureRect_gui_input"]
 [connection signal="resized" from="Panel/VBox/TextureRect" to="." method="_on_texture_rect_resized"]
