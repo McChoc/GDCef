@@ -247,6 +247,8 @@ bool GDCef::initialize(godot::Dictionary config)
         getConfig(config, "ad_block_patterns", godot::Array());
     m_browsers_settings.user_gesture_required =
         getConfig(config, "user_gesture_required", true);
+    m_browsers_settings.user_agent =
+        getConfig(config, "user_agent", std::string{});
 
     // This function should be called on the main application thread to
     // initialize the CEF browser process. A return value of true indicates
@@ -757,6 +759,14 @@ void GDCef::Impl::OnBeforeCommandLineProcessing(
     {
         command_line->AppendSwitchWithValue("autoplay-policy",
                                             "no-user-gesture-required");
+    }
+
+    // Set the user agent
+    // https://github.com/Lecrapouille/gdcef/issues/75
+    if (!settings.user_agent.empty())
+    {
+        command_line->AppendSwitchWithValue("user-agent",
+                                            settings.user_agent.c_str());
     }
 
     // TBD: Do we have to allow gdscript to give command line ?

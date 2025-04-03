@@ -308,6 +308,8 @@ private:
         godot::Array custom_patterns;
         //! \brief User gesture required
         bool user_gesture_required = true;
+        //! \brief User agent
+        std::string user_agent;
     };
 
     //! \brief CEF interface implementation

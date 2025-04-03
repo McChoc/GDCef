@@ -105,7 +105,7 @@ func create_browser(url):
 		{
 			"javascript": true,
 			"webgl": true,
-			"user_gesture_required": true,
+			"user_gesture_required": true
 		})
 	if browser == null:
 		$Panel/VBox/HBox2/Info.set_text($CEF.get_error())
@@ -355,6 +355,7 @@ func _ready():
 	#   "user_gesture_required": true,
 	#   "allow_downloads": false,
 	#   "download_folder": "res://",
+	#   "user_agent": "",
 	# }
 	#
 	# Configure CEF. In incognito mode cache directories not used and in-memory
