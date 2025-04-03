@@ -153,35 +153,9 @@ Browser settings are passed as a GDScript Dictionary to `create_browser`. Here a
 | enable_ad_block | bool | true | Enable or disable the ad blocker |
 | ad_block_patterns | Array[String] | [] | Additional regex patterns for blocking ads. Invalid patterns will be ignored. |
 | allow_downloads | bool | true | Allow the browser for downloading data. |
-| download_folder | string | "user://" | Desired location holding downloaded files. |
+| download_folder | string | "user://" | Desired location holding downloaded files. |
+| user_agent | string | "" | Custom user agent string to use for the browser. |
 | user_gesture_required | bool | true | false: Autoplay policy that does not require any user gesture. |
-
-Example usage:
-
-```gdscript
-var config = {
-    "enable_ad_block": true,
-    "ad_block_patterns": [
-        ".*example-ad-server\.com.*",
-        ".*/custom-ads/.*"
-    ]
-}
-var browser = $GDCEF.create_browser("https://example.com", $TextureRect, config)
-
-# Add additional patterns later
-if browser.add_ad_block_pattern(".*another-ad-server\.com.*"):
-    print("Pattern added successfully")
-else:
-    print("Failed to add pattern")
-
-# Check if ad blocking is enabled
-if browser.is_ad_block_enabled():
-    print("Ad blocking is active")
-
-# Disable ad blocking
-if browser.enable_ad_block(false):
-    print("Ad blocking disabled successfully")
-```
 
 ### CEF version
 
@@ -265,6 +239,12 @@ browser.emit_js("event_name", [1, 2, 3])            // Array
 browser.emit_js("event_name", PackedByteArray([...])) # Binary data
 ```
 
-### CheatSheet Example
+CheatSheet Example:
 
 See [this example](../tests/unit-test-js-gdscript/)
+
+### Example of User agent
+
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0"
+
+You can see the value, if you debug CEF (see [the FAQ section](../README.md)) and click on the "Network" menu. You will it in a GET method.
