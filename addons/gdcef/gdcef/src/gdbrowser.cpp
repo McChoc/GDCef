@@ -35,6 +35,10 @@
 
 #ifdef _OPENMP
 #    include <omp.h>
+#    define OPENMP_PARALLEL_FOR #pragma omp parallel for
+#    define PARALLEL_FOR OPENMP_PARALLEL_FOR for
+#else
+#    define PARALLEL_FOR for
 #endif
 
 //------------------------------------------------------------------------------
@@ -314,12 +318,7 @@ void GDBrowserView::onPaint(CefRefPtr<CefBrowser> /*browser*/,
 
     if (bResized)
     {
-        // PPL
-        // concurrency::parallel_for(0, height,
-        //    std::bind(doCopyLine, std::placeholders::_1, 0, width));
-
-#pragma omp parallel for
-        for (int y = 0; y < height; ++y)
+        PARALLEL_FOR(int y = 0; y < height; ++y)
         {
             doCopyLine(y, 0, width);
         }
@@ -333,13 +332,7 @@ void GDBrowserView::onPaint(CefRefPtr<CefBrowser> /*browser*/,
     {
         for (const CefRect& rect : dirtyRects)
         {
-            // PPL
-            // concurrency::parallel_for(rect.y, rect.y + rect.height,
-            //     std::bind(doCopyLine, std::placeholders::_1, rect.x,
-            //     rect.width));
-
-#pragma omp parallel for
-            for (int y = rect.y; y < rect.y + rect.height; ++y)
+            PARALLEL_FOR(int y = rect.y; y < rect.y + rect.height; ++y)
             {
                 doCopyLine(y, rect.x, rect.width);
             }
