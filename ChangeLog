@@ -1,3 +1,12 @@
+Version 0.17.0:
+	* Refresh JS/gdscript bindings.
+	* Add JS/gdscript unit tests.
+	* Fix texture size changing depending on the page.
+	* Add possibility to change the user agent value.
+	* Add autoplay option.
+	* Removed some Adblock regex.
+	* Light cleaning code, build system, doc.
+
 Version 0.16.1:
 	* Disable openmp by default (less CPU consumption).
 
