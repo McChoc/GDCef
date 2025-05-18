@@ -1,47 +1,48 @@
 Version 0.17.0:
-	* Refresh JS/gdscript bindings.
-	* Add JS/gdscript unit tests.
-	* Fix texture size changing depending on the page.
-	* Add possibility to change the user agent value.
-	* Add autoplay option.
-	* Removed some Adblock regex.
-	* Light cleaning code, build system, doc.
+	* Massive refresh code for JS/gdscript bindings. #40
+	* Add JS/gdscript unit tests. #40
+	* Demos: Fix texture size changing depending on the page size.
+	* Allow changing the user agent value #75.
+	* Add autoplay option #79.
+	* Removed some Adblock regex #80.
+	* Cleaning code, build system, doc. #78
 
 Version 0.16.1:
-	* Disable openmp by default (less CPU consumption).
+	* Disable openmp by default (less CPU consumption). #76
 
 Version 0.16.0:
-	* Add initial naive add blocker.
-    * Remove Godot keyboard bindings interfering in demo 2D.
+	* Add initial naive add blocker. #74
+    * Remove Godot keyboard bindings interfering in demo 2D. #52
 
 Version 0.15.0:
-	* Add JS/GDScript bindings.
+	* Add JS/GDScript bindings. #40
 	* Update to CEF 131.
-	* Update documentations.
+	* Update documentation.
 
 Version 0.14.1:
-	* Update build: managing new gdCEF release names for downlad.
+	* Update build: managing new gdCEF release names for download from GitHub.
 	* Update build: add GDCEF_VERSION.txt inside cef_artifacts folder.
-	* Update documentation and remove a cpp file no longer used.
+	* Update build: Removed old main.cpp compiled while supposed to be removed.
+	* Update documentation.
 
 Version 0.14.0:
-	* Forbid creation of native windows when opening on a new browser.
-	* Force using C++20 for Windows fixing issue with std::filesystem accessing to cef_artifacts.
-	* Fix destroying browsers as scene graph nodes.
+	* Forbid creation of native windows when opening on a new browser. #19
+	* Force using C++20 for Windows fixing issue with std::filesystem accessing to cef_artifacts. #45
+	* Fix destroying browsers as scene graph nodes. #41
 	* Fix missing files in the CEF artifact.
 	* API: Add functions/signals/settings for downloading files.
 	* Use Godot warnings/errors instead of std::cout/cerr.
 	* Use more explicit include path to Godot header files.
-	* build system: Remove possibility of calling python scons (just missing path).
-	* build system: git clone projects using gdCEF as demos.
+	* build system: Revert multiple ways of calling python scons.
+	* build system: Clone in demo folder, a project using gdCEF.
 	* Update demos to Godot 4.3.
-	* Rename subprocess to render_process.
-	* Simplify the code of the render process: remove browser class.
+	* Rename "subprocess" folder to "render_process".
+	* Simplify the code of render_process: remove browser class.
 	* Cleanning documentation with the help of the IA: API, details design.
 	* Add clang-format and change code indentation.
 
 Version 0.13.0:
-	* Portage to MacOS.
+	* Portage to MacOS. #14
 	* Fix documentation.
 	* Update CI workflow fix regression when creating a release artifact.
 
@@ -74,7 +75,7 @@ Version 0.10.0:
 	* Minor fixes.
 
 Version 0.9.0:
-	* Optimized onPaint() refreshing only dirty areas.
+	* Optimized onPaint() refreshing only dirty areas. #14
 	* API: Add option to allow accessing to the camera.
 
 Version 0.8.0: (breaking API)
@@ -89,7 +90,7 @@ Version 0.8.0: (breaking API)
 	* Minor fixes.
 
 Version 0.7.2:
-	* Portage to Godot-4.
+	* Portage to Godot-4. #30
 	* Major git branches refactorization.
 	* Update CEF version to 120.
 	* Add basic CI.
