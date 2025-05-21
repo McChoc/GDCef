@@ -1,0 +1,38 @@
+Initial authors:
+
+- Quentin Quadrat <lecrapouille@gmail.com>
+  - initial commits on Linux and Godot 3.
+- Alain Duron <duron.alain@gmail.com>
+  - initial portage for Windows and Godot 3.
+
+Thanks to contributors:
+
+- BlayTheNinth:
+  - initial portage to Godot 4.2.
+- eliopark-nsusla:
+    - portage to MacOS X,
+    - multithreading for dirty texture regions,
+    - modifiers for mouse events,
+    - Fix Windows compilation.
+- Raphipod:
+  - docs, fixes, Windows.
+- Daniel Sanche
+  - javascript injection,
+  - fixes.
+- pixaline:
+  - Routing audio stream
+- rpaciorek:
+  - suppressing LD_LIBRARY_PATH by using rpath
+
+Thanks to users:
+
+- FaceDev
+  - DD for having be the first to use gdCEF in his game (metaverse).
+  - for his WTF youtube video using gdCEF :)
+
+Thanks to IA:
+
+- Claude Sonnet:
+  - improving documentation
+  - help generating code
+  - help explaining CEF guts

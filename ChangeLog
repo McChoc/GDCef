@@ -1,0 +1,141 @@
+Version 0.17.0:
+	* Massive refresh code for JS/gdscript bindings. #40
+	* Add JS/gdscript unit tests. #40
+	* Demos: Fix texture size changing depending on the page size.
+	* Allow changing the user agent value #75.
+	* Add autoplay option #79.
+	* Removed some Adblock regex #80.
+	* Cleaning code, build system, doc. #78
+
+Version 0.16.1:
+	* Disable openmp by default (less CPU consumption). #76
+
+Version 0.16.0:
+	* Add initial naive add blocker. #74
+    * Remove Godot keyboard bindings interfering in demo 2D. #52
+
+Version 0.15.0:
+	* Add JS/GDScript bindings. #40
+	* Update to CEF 131.
+	* Update documentation.
+
+Version 0.14.1:
+	* Update build: managing new gdCEF release names for download from GitHub.
+	* Update build: add GDCEF_VERSION.txt inside cef_artifacts folder.
+	* Update build: Removed old main.cpp compiled while supposed to be removed.
+	* Update documentation.
+
+Version 0.14.0:
+	* Forbid creation of native windows when opening on a new browser. #19
+	* Force using C++20 for Windows fixing issue with std::filesystem accessing to cef_artifacts. #45
+	* Fix destroying browsers as scene graph nodes. #41
+	* Fix missing files in the CEF artifact.
+	* API: Add functions/signals/settings for downloading files.
+	* Use Godot warnings/errors instead of std::cout/cerr.
+	* Use more explicit include path to Godot header files.
+	* build system: Revert multiple ways of calling python scons.
+	* build system: Clone in demo folder, a project using gdCEF.
+	* Update demos to Godot 4.3.
+	* Rename "subprocess" folder to "render_process".
+	* Simplify the code of render_process: remove browser class.
+	* Cleanning documentation with the help of the IA: API, details design.
+	* Add clang-format and change code indentation.
+
+Version 0.13.0:
+	* Portage to MacOS. #14
+	* Fix documentation.
+	* Update CI workflow fix regression when creating a release artifact.
+
+Version 0.12.1:
+	* Add API: get_title.
+	* Update doc concerning CPU over consuming.
+	* Update API and gallery introducing wattesigma project.
+
+Version 0.12.0:
+	* Revert CEF version to 125 since 1st page may not be displayed.
+	* build script: cleaning code and allow downloading GDCEF releases on GitHub.
+	* Removing some CEF warnings and fix possible issue with cache folder.
+	* Breaking API: fix possible infinite loop callback on_page_failed. Update demos.
+
+Version 0.11.0:
+	* Update CEF version to 128.
+	* Update script to use by default Godot version 4.3.
+	* Update script for accepting Godot git tag.
+	* Fix infinite loop callback on_page_failed_loading.
+	* Fix Windows compilation (openmp).
+	* Fix debuging CEF was always rejected.
+	* Add get_pixel_color function.
+	* Add dummy plugin gd/cfg files (to be seen by the plugin manager).
+	* Show SHA1 of cloned Godot
+
+Version 0.10.0:
+	* No longer to export LD_LIBRARY_PATH
+	* API: Get HTML content, WIP Adding copy/paste commands.
+	* Update CEF version to 125.
+	* Minor fixes.
+
+Version 0.9.0:
+	* Optimized onPaint() refreshing only dirty areas. #14
+	* API: Add option to allow accessing to the camera.
+
+Version 0.8.0: (breaking API)
+	* Pass modifiers to mouse events for drag handling.
+	* Add API: allow routing CEF audio to Godot.
+	* Add API: load from URI.
+	* Add API: callback when page failed loading.
+	* Breaking API: consitence between on_X and set_X.
+	* Breaking API: simplification of create_browser and resize.
+	* Refresh the demo2D .
+	* Update CEF version to 122.
+	* Minor fixes.
+
+Version 0.7.2:
+	* Portage to Godot-4. #30
+	* Major git branches refactorization.
+	* Update CEF version to 120.
+	* Add basic CI.
+	* build: Allow to change the name of the build folder.
+	* Minor fixes (doc, build, demos).
+
+Version 0.7.0:
+	* New API: get CEF version and allow to mute/unmute browser.
+	* Update CEF version to 110.
+	* Fix English in READMEs.
+
+Version 0.6.0:
+	* Beware: the API for this version is incompatible with previous version.
+	* Fix API: `on_mouse_wheel` scrolled horizontally and vertically: added `on_mouse_wheel_horizontal` function
+      and renamed `on_mouse_wheel` to `on_mouse_wheel_vertical`.
+	* Broken API: `_init` is no longer used but `initialise` taking as argument the CEF configuration.
+	* Broken API: `create_browser` is taking extra argument: the browser configuration.
+	* New API: CEF: `is_alive`, `get_error`. Browser: `get_error`, `execute_javascript`.
+	* Reorganize demos: rename 2D demo for hello-world demo. Add a real 2D browser application managing several tabs.
+
+Version 0.5.0:
+	* Fix function checking if CEF is started from the Godot editor or from application.
+	* Update CEF version to 107.
+
+Version 0.4.0:
+	* Move all project folders into the addons/ folder
+	* Update CEF version to 104.
+	* Default Godot version is now 3.5.
+	* Fix issues in demos.
+	* Organize doc.
+
+Version 0.3.2:
+	* Add second demo: CEF inside a 3D world with key and mouse bindings.
+
+Version 0.3.1:
+	* Build script: change python modules (no more wget).
+	* Update build script: clone and compile godot-cpp: no more command line needed.
+	* Fix build script: add missing Windows patches, add missing functions checking CMake and cl.exe
+	* Update documentation.
+
+Version 0.3.0:
+	* Switch to MIT license.
+
+Version 0.2.0:
+	* Split CEF class into two classes: the CEF holding several browsers.
+
+Version 0.1.0:
+	* Initial version single CEF class managing a single browser.
